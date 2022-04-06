@@ -16,7 +16,10 @@ namespace eBiletix.Data.Base
             _context = context;
         }
 
-        public async Task AddAsync(T entity) => await _context.Set<T>().AddAsync(entity);
+        public async Task AddAsync(T entity) { 
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task DeleteAsync(int id)
         {

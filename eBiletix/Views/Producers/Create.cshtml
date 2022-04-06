@@ -1,21 +1,21 @@
-﻿@model Actor
+﻿@model Producer
 @{
-    ViewData["Title"] = "Update actor";
+    ViewData["Title"] = "Add new producer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Update Actor</h1>
+            <h1>Add New Producer</h1>
         </p>
     </div>
     <div class="row" style="width:100%;">
         <div class="col-md-8 offset-2">
-            <form asp-action="Edit">
+            <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group text-center">
-                    <img id="ProfilePictureURLPreview" class="border-info rounded-circle"  style="max-width:150px;"/>
+                    <img id="ProfilePictureURLPreview" class="border-info rounded-circle" style="max-width:150px;" />
                 </div>
                 <div class="form-group">
                     <label asp-for="ProfilePictureURL" class="control-label"></label>
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-outline-success float-right" />
+                    <input type="submit" value="Create" class="btn btn-outline-success float-right" />
                     <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
                 </div>
             </form>
@@ -43,18 +43,18 @@
 </div>
 
 @section scripts{
-<script>
+    <script>
 
     $(document).ready(function () {
 
         var output = document.getElementById("ProfilePictureURLPreview");
-        output.src = $("#ProfilePictureURL").val(); 
+        output.src = $("#ProfilePictureURL").val();
     });
 
 
     $("#ProfilePictureURL").on("change", function () {
         var output = document.getElementById("ProfilePictureURLPreview");
-        output.src = $(this).val(); 
+        output.src = $(this).val();
     });
-</script>
- }
+    </script>
+}

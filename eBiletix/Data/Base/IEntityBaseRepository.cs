@@ -11,9 +11,9 @@ namespace eBiletix.Data.Base
 
         Task<T> GetByIdAsync(int id);
 
-        Task AddAsync(T actor);
+        Task AddAsync(T entity);
 
-        Task UpdateAsync(int id, T actor);
+        Task UpdateAsync(int id, T entity);
 
         Task DeleteAsync(int id);
     }

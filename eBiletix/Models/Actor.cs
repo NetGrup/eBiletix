@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eBiletix.Models
 {
-    public class Actor:IEntityBase
+    public class Actor : IEntityBase
     {
         [Key]
         public int Id { get; set; }
 
-        [Display(Name ="Profile Picture")]
-        [Required(ErrorMessage ="Profile picture is required")]
+        [Display(Name = "Profile Picture")]
+        [Required(ErrorMessage = "Profile picture is required")]
         public string ProfilePictureURL { get; set; }
 
         [Display(Name = "Full Name")]

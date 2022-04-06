@@ -1,13 +1,13 @@
-﻿@model Actor
+﻿@model Producer
 @{
-    ViewData["Title"] = "Update actor";
+    ViewData["Title"] = "Update producer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Update Actor</h1>
+            <h1>Update Producer</h1>
         </p>
     </div>
     <div class="row" style="width:100%;">
@@ -15,7 +15,7 @@
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group text-center">
-                    <img id="ProfilePictureURLPreview" class="border-info rounded-circle"  style="max-width:150px;"/>
+                    <img id="ProfilePictureURLPreview" class="border-info rounded-circle" style="max-width:150px;" />
                 </div>
                 <div class="form-group">
                     <label asp-for="ProfilePictureURL" class="control-label"></label>
@@ -43,18 +43,18 @@
 </div>
 
 @section scripts{
-<script>
+    <script>
 
     $(document).ready(function () {
 
         var output = document.getElementById("ProfilePictureURLPreview");
-        output.src = $("#ProfilePictureURL").val(); 
+        output.src = $("#ProfilePictureURL").val();
     });
 
 
     $("#ProfilePictureURL").on("change", function () {
         var output = document.getElementById("ProfilePictureURLPreview");
-        output.src = $(this).val(); 
+        output.src = $(this).val();
     });
-</script>
- }
+    </script>
+}

@@ -11,9 +11,9 @@ namespace eBiletix.Controllers
 {
     public class ActorsController : Controller
     {
-        private readonly IActorService _service;
+        private readonly IActorsService _service;
 
-        public ActorsController(IActorService service)
+        public ActorsController(IActorsService service)
         {
             _service = service;
         }

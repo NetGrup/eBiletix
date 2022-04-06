@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace eBiletix.Data.Services
 {
-    public interface IActorService:IEntityBaseRepository<Actor>
-    { 
+    public class CinemasService:EntityBaseRepository<Cinema>, ICinemasService
+    {
+        public CinemasService(AppDbContext context):base(context)
+        {
+        }
     }
 }
