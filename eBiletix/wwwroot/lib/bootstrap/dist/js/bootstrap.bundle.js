@@ -601,19 +601,19 @@
     CAROUSEL: 'carousel',
     ACTIVE: 'active',
     SLIDE: 'slide',
-    RIGHT: 'carousel-item-right',
-    LEFT: 'carousel-item-left',
-    NEXT: 'carousel-item-next',
-    PREV: 'carousel-item-prev',
-    ITEM: 'carousel-item',
+    RIGHT: 'carousel-Model-right',
+    LEFT: 'carousel-Model-left',
+    NEXT: 'carousel-Model-next',
+    PREV: 'carousel-Model-prev',
+    Model: 'carousel-Model',
     POINTER_EVENT: 'pointer-event'
   };
   var Selector$2 = {
     ACTIVE: '.active',
-    ACTIVE_ITEM: '.active.carousel-item',
-    ITEM: '.carousel-item',
-    ITEM_IMG: '.carousel-item img',
-    NEXT_PREV: '.carousel-item-next, .carousel-item-prev',
+    ACTIVE_Model: '.active.carousel-Model',
+    Model: '.carousel-Model',
+    Model_IMG: '.carousel-Model img',
+    NEXT_PREV: '.carousel-Model-next, .carousel-Model-prev',
     INDICATORS: '.carousel-indicators',
     DATA_SLIDE: '[data-slide], [data-slide-to]',
     DATA_RIDE: '[data-ride="carousel"]'
@@ -633,7 +633,7 @@
   /*#__PURE__*/
   function () {
     function Carousel(element, config) {
-      this._items = null;
+      this._Models = null;
       this._interval = null;
       this._activeElement = null;
       this._isPaused = false;
@@ -706,11 +706,11 @@
     _proto.to = function to(index) {
       var _this = this;
 
-      this._activeElement = this._element.querySelector(Selector$2.ACTIVE_ITEM);
+      this._activeElement = this._element.querySelector(Selector$2.ACTIVE_Model);
 
-      var activeIndex = this._getItemIndex(this._activeElement);
+      var activeIndex = this._getModelIndex(this._activeElement);
 
-      if (index > this._items.length - 1 || index < 0) {
+      if (index > this._Models.length - 1 || index < 0) {
         return;
       }
 
@@ -729,13 +729,13 @@
 
       var direction = index > activeIndex ? Direction.NEXT : Direction.PREV;
 
-      this._slide(direction, this._items[index]);
+      this._slide(direction, this._Models[index]);
     };
 
     _proto.dispose = function dispose() {
       $(this._element).off(EVENT_KEY$2);
       $.removeData(this._element, DATA_KEY$2);
-      this._items = null;
+      this._Models = null;
       this._config = null;
       this._element = null;
       this._interval = null;
@@ -844,7 +844,7 @@
         }
       };
 
-      $(this._element.querySelectorAll(Selector$2.ITEM_IMG)).on(Event$2.DRAG_START, function (e) {
+      $(this._element.querySelectorAll(Selector$2.Model_IMG)).on(Event$2.DRAG_START, function (e) {
         return e.preventDefault();
       });
 
@@ -890,33 +890,33 @@
       }
     };
 
-    _proto._getItemIndex = function _getItemIndex(element) {
-      this._items = element && element.parentNode ? [].slice.call(element.parentNode.querySelectorAll(Selector$2.ITEM)) : [];
-      return this._items.indexOf(element);
+    _proto._getModelIndex = function _getModelIndex(element) {
+      this._Models = element && element.parentNode ? [].slice.call(element.parentNode.querySelectorAll(Selector$2.Model)) : [];
+      return this._Models.indexOf(element);
     };
 
-    _proto._getItemByDirection = function _getItemByDirection(direction, activeElement) {
+    _proto._getModelByDirection = function _getModelByDirection(direction, activeElement) {
       var isNextDirection = direction === Direction.NEXT;
       var isPrevDirection = direction === Direction.PREV;
 
-      var activeIndex = this._getItemIndex(activeElement);
+      var activeIndex = this._getModelIndex(activeElement);
 
-      var lastItemIndex = this._items.length - 1;
-      var isGoingToWrap = isPrevDirection && activeIndex === 0 || isNextDirection && activeIndex === lastItemIndex;
+      var lastModelIndex = this._Models.length - 1;
+      var isGoingToWrap = isPrevDirection && activeIndex === 0 || isNextDirection && activeIndex === lastModelIndex;
 
       if (isGoingToWrap && !this._config.wrap) {
         return activeElement;
       }
 
       var delta = direction === Direction.PREV ? -1 : 1;
-      var itemIndex = (activeIndex + delta) % this._items.length;
-      return itemIndex === -1 ? this._items[this._items.length - 1] : this._items[itemIndex];
+      var ModelIndex = (activeIndex + delta) % this._Models.length;
+      return ModelIndex === -1 ? this._Models[this._Models.length - 1] : this._Models[ModelIndex];
     };
 
     _proto._triggerSlideEvent = function _triggerSlideEvent(relatedTarget, eventDirectionName) {
-      var targetIndex = this._getItemIndex(relatedTarget);
+      var targetIndex = this._getModelIndex(relatedTarget);
 
-      var fromIndex = this._getItemIndex(this._element.querySelector(Selector$2.ACTIVE_ITEM));
+      var fromIndex = this._getModelIndex(this._element.querySelector(Selector$2.ACTIVE_Model));
 
       var slideEvent = $.Event(Event$2.SLIDE, {
         relatedTarget: relatedTarget,
@@ -933,7 +933,7 @@
         var indicators = [].slice.call(this._indicatorsElement.querySelectorAll(Selector$2.ACTIVE));
         $(indicators).removeClass(ClassName$2.ACTIVE);
 
-        var nextIndicator = this._indicatorsElement.children[this._getItemIndex(element)];
+        var nextIndicator = this._indicatorsElement.children[this._getModelIndex(element)];
 
         if (nextIndicator) {
           $(nextIndicator).addClass(ClassName$2.ACTIVE);
@@ -944,13 +944,13 @@
     _proto._slide = function _slide(direction, element) {
       var _this4 = this;
 
-      var activeElement = this._element.querySelector(Selector$2.ACTIVE_ITEM);
+      var activeElement = this._element.querySelector(Selector$2.ACTIVE_Model);
 
-      var activeElementIndex = this._getItemIndex(activeElement);
+      var activeElementIndex = this._getModelIndex(activeElement);
 
-      var nextElement = element || activeElement && this._getItemByDirection(direction, activeElement);
+      var nextElement = element || activeElement && this._getModelByDirection(direction, activeElement);
 
-      var nextElementIndex = this._getItemIndex(nextElement);
+      var nextElementIndex = this._getModelIndex(nextElement);
 
       var isCycling = Boolean(this._interval);
       var directionalClassName;
@@ -4130,7 +4130,7 @@
     FORM_CHILD: '.dropdown form',
     MENU: '.dropdown-menu',
     NAVBAR_NAV: '.navbar-nav',
-    VISIBLE_ITEMS: '.dropdown-menu .dropdown-item:not(.disabled):not(:disabled)'
+    VISIBLE_ModelS: '.dropdown-menu .dropdown-Model:not(.disabled):not(:disabled)'
   };
   var AttachmentMap = {
     TOP: 'top-start',
@@ -4533,20 +4533,20 @@
         return;
       }
 
-      var items = [].slice.call(parent.querySelectorAll(Selector$4.VISIBLE_ITEMS));
+      var Models = [].slice.call(parent.querySelectorAll(Selector$4.VISIBLE_ModelS));
 
-      if (items.length === 0) {
+      if (Models.length === 0) {
         return;
       }
 
-      var index = items.indexOf(event.target);
+      var index = Models.indexOf(event.target);
 
       if (event.which === ARROW_UP_KEYCODE && index > 0) {
         // Up
         index--;
       }
 
-      if (event.which === ARROW_DOWN_KEYCODE && index < items.length - 1) {
+      if (event.which === ARROW_DOWN_KEYCODE && index < Models.length - 1) {
         // Down
         index++;
       }
@@ -4555,7 +4555,7 @@
         index = 0;
       }
 
-      items[index].focus();
+      Models[index].focus();
     };
 
     _createClass(Dropdown, null, [{
@@ -5194,7 +5194,7 @@
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
    * --------------------------------------------------------------------------
    */
-  var uriAttrs = ['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href'];
+  var uriAttrs = ['background', 'cite', 'href', 'Modeltype', 'longdesc', 'poster', 'src', 'xlink:href'];
   var ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
   var DefaultWhitelist = {
     // Global attributes allowed on any supplied element below.
@@ -6241,7 +6241,7 @@
     LOAD_DATA_API: "load" + EVENT_KEY$8 + DATA_API_KEY$6
   };
   var ClassName$8 = {
-    DROPDOWN_ITEM: 'dropdown-item',
+    DROPDOWN_Model: 'dropdown-Model',
     DROPDOWN_MENU: 'dropdown-menu',
     ACTIVE: 'active'
   };
@@ -6250,10 +6250,10 @@
     ACTIVE: '.active',
     NAV_LIST_GROUP: '.nav, .list-group',
     NAV_LINKS: '.nav-link',
-    NAV_ITEMS: '.nav-item',
-    LIST_ITEMS: '.list-group-item',
+    NAV_ModelS: '.nav-Model',
+    LIST_ModelS: '.list-group-Model',
     DROPDOWN: '.dropdown',
-    DROPDOWN_ITEMS: '.dropdown-item',
+    DROPDOWN_ModelS: '.dropdown-Model',
     DROPDOWN_TOGGLE: '.dropdown-toggle'
   };
   var OffsetMethod = {
@@ -6276,7 +6276,7 @@
       this._element = element;
       this._scrollElement = element.tagName === 'BODY' ? window : element;
       this._config = this._getConfig(config);
-      this._selector = this._config.target + " " + Selector$8.NAV_LINKS + "," + (this._config.target + " " + Selector$8.LIST_ITEMS + ",") + (this._config.target + " " + Selector$8.DROPDOWN_ITEMS);
+      this._selector = this._config.target + " " + Selector$8.NAV_LINKS + "," + (this._config.target + " " + Selector$8.LIST_ModelS + ",") + (this._config.target + " " + Selector$8.DROPDOWN_ModelS);
       this._offsets = [];
       this._targets = [];
       this._activeTarget = null;
@@ -6321,14 +6321,14 @@
         }
 
         return null;
-      }).filter(function (item) {
-        return item;
+      }).filter(function (Model) {
+        return Model;
       }).sort(function (a, b) {
         return a[0] - b[0];
-      }).forEach(function (item) {
-        _this2._offsets.push(item[0]);
+      }).forEach(function (Model) {
+        _this2._offsets.push(Model[0]);
 
-        _this2._targets.push(item[1]);
+        _this2._targets.push(Model[1]);
       });
     };
 
@@ -6427,7 +6427,7 @@
 
       var $link = $([].slice.call(document.querySelectorAll(queries.join(','))));
 
-      if ($link.hasClass(ClassName$8.DROPDOWN_ITEM)) {
+      if ($link.hasClass(ClassName$8.DROPDOWN_Model)) {
         $link.closest(Selector$8.DROPDOWN).find(Selector$8.DROPDOWN_TOGGLE).addClass(ClassName$8.ACTIVE);
         $link.addClass(ClassName$8.ACTIVE);
       } else {
@@ -6435,9 +6435,9 @@
         $link.addClass(ClassName$8.ACTIVE); // Set triggered links parents as active
         // With both <ul> and <nav> markup a parent is the previous sibling of any nav ancestor
 
-        $link.parents(Selector$8.NAV_LIST_GROUP).prev(Selector$8.NAV_LINKS + ", " + Selector$8.LIST_ITEMS).addClass(ClassName$8.ACTIVE); // Handle special case when .nav-link is inside .nav-item
+        $link.parents(Selector$8.NAV_LIST_GROUP).prev(Selector$8.NAV_LINKS + ", " + Selector$8.LIST_ModelS).addClass(ClassName$8.ACTIVE); // Handle special case when .nav-link is inside .nav-Model
 
-        $link.parents(Selector$8.NAV_LIST_GROUP).prev(Selector$8.NAV_ITEMS).children(Selector$8.NAV_LINKS).addClass(ClassName$8.ACTIVE);
+        $link.parents(Selector$8.NAV_LIST_GROUP).prev(Selector$8.NAV_ModelS).children(Selector$8.NAV_LINKS).addClass(ClassName$8.ACTIVE);
       }
 
       $(this._scrollElement).trigger(Event$8.ACTIVATE, {
@@ -6586,8 +6586,8 @@
       var selector = Util.getSelectorFromElement(this._element);
 
       if (listElement) {
-        var itemSelector = listElement.nodeName === 'UL' || listElement.nodeName === 'OL' ? Selector$9.ACTIVE_UL : Selector$9.ACTIVE;
-        previous = $.makeArray($(listElement).find(itemSelector));
+        var ModelSelector = listElement.nodeName === 'UL' || listElement.nodeName === 'OL' ? Selector$9.ACTIVE_UL : Selector$9.ACTIVE;
+        previous = $.makeArray($(listElement).find(ModelSelector));
         previous = previous[previous.length - 1];
       }
 

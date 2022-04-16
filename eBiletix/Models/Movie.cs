@@ -1,4 +1,5 @@
 ﻿using eBiletix.Data;
+using eBiletix.Data.Base;
 using eBiletix.Data.Enums;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eBiletix.Models
 {
-    public class Movie
+    public class Movie:IEntityBase
     {
         [Key]
         public int Id { get; set; }
