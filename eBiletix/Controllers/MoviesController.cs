@@ -32,7 +32,7 @@ namespace eBiletix.Controllers
 
         public IActionResult Create() 
         {
-            return View();
+            return View(); 
         }
     }
 }
