@@ -1,4 +1,5 @@
 ﻿using eBiletix.Data.Base;
+using eBiletix.Data.ViewModels;
 using eBiletix.Models;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,9 @@ namespace eBiletix.Data.Services
     public interface IMoviesService:IEntityBaseRepository<Movie>
     {
         Task<Movie> GetMovieByIdAsync(int id);
+
+        Task<NewMovieDropdownsVM> GetNewMovieDropdownsValues();
+
+        Task AddNewMovieAsync(NewMovieVM data);
     }
 }

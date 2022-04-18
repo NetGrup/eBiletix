@@ -1,6 +1,8 @@
 ﻿using eBiletix.Data;
 using eBiletix.Data.Services;
+using eBiletix.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,15 +26,41 @@ namespace eBiletix.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> Details(int id) 
+        public async Task<IActionResult> Details(int id)
         {
             var detail = await _service.GetMovieByIdAsync(id);
             return View(detail);
         }
 
-        public IActionResult Create() 
+        public async Task<IActionResult> Create()
         {
-            return View(); 
+            var moviesDropDownsData = await _service.GetNewMovieDropdownsValues();
+
+            ViewBag.Cinemas = new SelectList(moviesDropDownsData.Cinemas, "Id", "Name");
+            ViewBag.Producers = new SelectList(moviesDropDownsData.Producers, "Id", "FullName");
+            ViewBag.Actors = new SelectList(moviesDropDownsData.Actors, "Id", "FullName");
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(NewMovieVM movie)
+        {
+            if (!ModelState.IsValid)
+            {
+                var moviesDropDownsData = await _service.GetNewMovieDropdownsValues();
+
+                ViewBag.Cinemas = new SelectList(moviesDropDownsData.Cinemas, "Id", "Name");
+                ViewBag.Producers = new SelectList(moviesDropDownsData.Producers, "Id", "FullName");
+                ViewBag.Actors = new SelectList(moviesDropDownsData.Actors, "Id", "FullName");
+
+                return View(movie);
+
+            }
+
+
+            await _service.AddNewMovieAsync(movie);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
